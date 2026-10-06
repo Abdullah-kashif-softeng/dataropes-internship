@@ -29,3 +29,14 @@ WHERE o.status <> 'Cancelled'
 GROUP BY c.customer_id, c.first_name, c.last_name
 ORDER BY revenue DESC;
 
+# customers who spent the most between 2026-02-01 and 2026-07-30
+SELECT 
+    c.customer_id, 
+    c.first_name, 
+    c.last_name,
+    SUM(o.total_amount) AS total_spent
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+WHERE o.order_date >= '2026-02-01' AND o.order_date < '2026-07-30'
+GROUP BY c.customer_id, c.first_name, c.last_name
+ORDER BY total_spent DESC;
