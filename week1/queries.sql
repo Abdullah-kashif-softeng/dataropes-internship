@@ -40,3 +40,14 @@ INNER JOIN orders o ON c.customer_id = o.customer_id
 WHERE o.order_date >= '2026-02-01' AND o.order_date < '2026-07-30'
 GROUP BY c.customer_id, c.first_name, c.last_name
 ORDER BY total_spent DESC;
+
+# customers who spent more than 2000 on average
+SELECT
+    c.first_name, 
+    c.last_name, 
+    AVG(o.total_amount) AS AVG_orders
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.first_name, c.last_name
+HAVING AVG(o.total_amount) > 2000
+ORDER BY AVG_orders DESC;
